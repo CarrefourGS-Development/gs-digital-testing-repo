@@ -1,0 +1,179 @@
+name: 'PROD'
+
+on:
+  push:
+    branches:
+      - prod
+    paths:
+      - '.github/workflows/terraform-prod.yml'
+      - 'environments/prod/**'
+      - 'modules/**'
+  pull_request:
+    branches:
+      - prod
+    paths:
+      - 'environments/prod/**'
+      - 'modules/**'
+  workflow_dispatch:
+    inputs:
+      create_new_project:
+        type: boolean
+        description: 'Create GCP Project'
+        default: false
+
+permissions:
+  contents: read
+  id-token: write # Required for requesting the JWT token from GitHub OIDC
+
+jobs:
+  # -----------------------------------------------------------------
+  # JOB 1: TERRAFORM PLAN (Create project)
+  # -----------------------------------------------------------------
+  terraform-plan-create-project:
+    name: 'Terraform Plan (Create Project)'
+    if: ${{ github.event.inputs.create_new_project == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/prod/project
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP (Prod)
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
+        service_account: 'gs-digital-project-creator@gs-digital-root-dev.iam.gserviceaccount.com'
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.0
+
+    - name: Terraform Init
+      run: terraform init -var-file="../terraform.tfvars"
+
+    - name: Terraform Plan
+      run: terraform plan -input=false -var-file="../terraform.tfvars"
+
+  # -----------------------------------------------------------------
+  # JOB 2: TERRAFORM APPLY (Create project)
+  # -----------------------------------------------------------------
+  terraform-apply-create-project:
+    name: 'Terraform Apply (Create Project)'
+    needs: terraform-plan-create-project
+    if: ${{ github.event.inputs.create_new_project == 'true' }}
+    runs-on: ubuntu-latest
+    environment: production # Triggers native GitHub environment approval UI
+ 
+    defaults:
+      run:
+        working-directory: ./environments/prod/project
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP (Prod)
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
+        service_account: 'gs-digital-project-creator@gs-digital-root-dev.iam.gserviceaccount.com'
+
+    # # 2. Setup gcloud CLI (Optional, but loads credentials into gcloud)
+    # - name: 'Set up Cloud SDK'
+    #   uses: 'google-github-actions/setup-gcloud@v2'
+
+    # # 3. Print the identity to verify it works
+    # - name: 'Check Identity'
+    #   run: gcloud config get-value account
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.0
+
+    - name: Terraform Init
+      run: terraform init -var-file="../terraform.tfvars"
+
+    - name: Terraform Apply
+      run: terraform apply -input=false -auto-approve -var-file="../terraform.tfvars"
+
+  # -----------------------------------------------------------------
+  # JOB 3: TERRAFORM PLAN
+  # -----------------------------------------------------------------
+  terraform-plan:
+    name: 'Terraform Plan'
+    # needs: [terraform-apply-create-project]
+    # if: ${{ !cancelled() && !failure() }}
+    if: ${{ github.event.inputs.create_new_project != 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/prod/resources
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP (Prod)
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
+        service_account: 'gs-digital-project-creator@gs-digital-root-dev.iam.gserviceaccount.com'
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.0
+
+    - name: Terraform Init
+      run: terraform init -var-file="../terraform.tfvars"
+
+    - name: Terraform Plan
+      run: terraform plan -input=false -var-file="../terraform.tfvars"
+
+  # -----------------------------------------------------------------
+  # JOB 4: TERRAFORM APPLY
+  # -----------------------------------------------------------------
+  terraform-apply:
+    name: 'Terraform Apply'
+    needs: [terraform-plan]
+    # if: ${{ !cancelled() && !failure() }}
+    if: ${{ github.event.inputs.create_new_project != 'true' }}
+    runs-on: ubuntu-latest
+    environment: production # Triggers native GitHub environment approval UI
+    defaults:
+      run:
+        working-directory: ./environments/prod/resources
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP (Prod)
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
+        service_account: 'gs-digital-project-creator@gs-digital-root-dev.iam.gserviceaccount.com'
+
+    # # 2. Setup gcloud CLI (Optional, but loads credentials into gcloud)
+    # - name: 'Set up Cloud SDK'
+    #   uses: 'google-github-actions/setup-gcloud@v2'
+
+    # # 3. Print the identity to verify it works
+    # - name: 'Check Identity'
+    #   run: gcloud config get-value account
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.0
+
+    - name: Terraform Init
+      run: terraform init -var-file="../terraform.tfvars"
+
+    - name: Terraform Apply
+      run: terraform apply -input=false -auto-approve -var-file="../terraform.tfvars"
