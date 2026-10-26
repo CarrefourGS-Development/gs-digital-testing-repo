@@ -42,15 +42,3 @@ resource "google_storage_bucket_object" "files_folder" {
 
   depends_on = [google_storage_bucket.data_bucket]
 }
-
-# # BigQuery Dataset
-# resource "google_bigquery_dataset" "app_dataset" {
-#   dataset_id                 = "gep"
-#   # friendly_name              = "${var.environment} Analytics Dataset"
-#   location                   = var.location
-#   delete_contents_on_destroy = var.force_destroy
-
-#   labels = {
-#     env = var.environment
-#   }
-# }
