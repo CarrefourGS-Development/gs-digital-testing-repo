@@ -6,7 +6,7 @@ data "google_projects" "app_project" {
 locals {
   # Returns true if project is found in GCP
   project_exists = length(data.google_projects.app_project.projects) > 0
-  project_name = local.project_exists ? data.google_projects.app_project.projects[0].name : var.project_id
+  # project_name = local.project_exists ? data.google_projects.app_project.projects[0].name : var.project_id
 }
 
 # Create a new GCP project if it doesn't exist

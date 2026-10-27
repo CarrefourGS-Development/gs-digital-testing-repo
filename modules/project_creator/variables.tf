@@ -3,10 +3,10 @@ variable "project_id" {
   description = "GCP Project ID"
 }
 
-variable "project_name" {
-  type        = string
-  description = "GCP Project Name"
-}
+# variable "project_name" {
+#   type        = string
+#   description = "GCP Project Name"
+# }
 
 variable "location" {
   type        = string
