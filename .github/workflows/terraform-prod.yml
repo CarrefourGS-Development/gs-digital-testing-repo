@@ -1,6 +1,6 @@
 name: 'PROD'
 
-run-name: "PROD - ${{ inputs.create_new_project == true && format('Create Project: {0}', env.PROJECT_ID) || format('Deploy Resources: {0}', env.PROJECT_ID) }}"
+run-name: "PROD - ${{ inputs.create_new_project == true && format('Create Project') || format('Deploy Resources') }}"
 
 on:
   # push:
