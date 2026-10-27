@@ -17,4 +17,6 @@ resource "google_project" "app_project" {
   # org_id          = var.org_id
   billing_account = var.billing_account
   folder_id       = var.folder_id
+
+  deletion_policy = "ABANDON"
 }
