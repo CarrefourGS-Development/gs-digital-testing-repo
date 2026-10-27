@@ -1,6 +1,6 @@
 name: 'PROD'
 
-run-name: "PROD - ${{ inputs.create_new_project == true && format('Create Project') || format('Deploy Resources') }}"
+run-name: "PROD - ${{ inputs.create_new_project == true && format('Create Project/ Enable API') || format('Deploy Resources') }}"
 
 on:
   # push:
@@ -20,7 +20,7 @@ on:
     inputs:
       create_new_project:
         type: boolean
-        description: 'Create GCP Project'
+        description: 'Create GCP Project/ Enable API'
         default: false
 
 env:
