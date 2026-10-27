@@ -1,19 +1,19 @@
 name: 'PROD'
 
 on:
-  push:
-    branches:
-      - prod
-    paths:
-      - '.github/workflows/terraform-prod.yml'
-      - 'environments/prod/**'
-      - 'modules/**'
-  pull_request:
-    branches:
-      - prod
-    paths:
-      - 'environments/prod/**'
-      - 'modules/**'
+  # push:
+  #   branches:
+  #     - prod
+  #   paths:
+  #     - '.github/workflows/terraform-prod.yml'
+  #     - 'environments/prod/**'
+  #     - 'modules/**'
+  # pull_request:
+  #   branches:
+  #     - prod
+  #   paths:
+  #     - 'environments/prod/**'
+  #     - 'modules/**'
   workflow_dispatch:
     inputs:
       create_new_project:
