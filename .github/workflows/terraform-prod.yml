@@ -58,6 +58,9 @@ jobs:
     - name: Terraform Init
       run: terraform init -var-file="../terraform.tfvars" -backend-config="prefix=projects/${{ env.PROJECT_ID }}/project"
 
+    - name: URGENT FIX
+      run: terraform state rm "module.project_creator.google_project.app_project[0]"
+      
     - name: Terraform Plan
       run: terraform plan -input=false -var-file="../terraform.tfvars"
 
