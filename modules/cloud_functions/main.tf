@@ -31,6 +31,8 @@ resource "google_storage_bucket_object" "object" {
   # bucket = google_storage_bucket.bucket.name
   bucket = var.bucket_name
   source = data.archive_file.function_code.output_path
+
+  depends_on = [google_storage_bucket.bucket]
 }
 
 resource "google_cloudfunctions2_function" "function" {

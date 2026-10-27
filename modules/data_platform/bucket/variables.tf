@@ -1,9 +1,3 @@
-variable "project_exists" {
-  type        = bool
-  default     = false
-  description = "Indicates whether the GCP project already exists"
-}
-
 variable "project_id" {
   type        = string
   description = "GCP Project ID"
