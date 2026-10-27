@@ -32,10 +32,10 @@ permissions:
 
 jobs:
   # -----------------------------------------------------------------
-  # JOB 1: TERRAFORM PLAN (Create project)
+  # JOB 1: TERRAFORM PLAN (Create project/ Enable API)
   # -----------------------------------------------------------------
   terraform-plan-create-project:
-    name: 'Terraform Plan (Create Project)'
+    name: 'Terraform Plan (Create Project/ Enable API)'
     if: ${{ github.event.inputs.create_new_project == 'true' }}
     runs-on: ubuntu-latest
     defaults:
@@ -64,10 +64,10 @@ jobs:
       run: terraform plan -input=false -var-file="../terraform.tfvars"
 
   # -----------------------------------------------------------------
-  # JOB 2: TERRAFORM APPLY (Create project)
+  # JOB 2: TERRAFORM APPLY (Create project/ Enable API)
   # -----------------------------------------------------------------
   terraform-apply-create-project:
-    name: 'Terraform Apply (Create Project)'
+    name: 'Terraform Apply (Create Project/ Enable API)'
     needs: terraform-plan-create-project
     if: ${{ github.event.inputs.create_new_project == 'true' }}
     runs-on: ubuntu-latest
