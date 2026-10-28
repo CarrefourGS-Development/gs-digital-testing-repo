@@ -36,7 +36,7 @@ resource "google_storage_bucket" "data_bucket" {
 # Create a dummy object ending in "/" to represent a directory
 resource "google_storage_bucket_object" "files_folder" {
   # count   = local.bucket_exists ? 0 : 1
-  name    = "files/"
+  name    = "files/.temp" # .temp is necessary to prevent the occasional error
   content = " " # Non-empty string required by the provider to satisfy API payload rules
   bucket  = var.bucket_name
 
