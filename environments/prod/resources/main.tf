@@ -86,20 +86,20 @@ module "cloudbuild_bucket" {
   force_destroy = true
 }
 
-# Create a GCS bucket for the project #Testing only
-module "temp_bucket" {
-  source = "../../../modules/data_platform/bucket"
+# # Create a GCS bucket for the project #Testing only
+# module "temp_bucket" {
+#   source = "../../../modules/data_platform/bucket"
 
-  project_id  = var.project_id
-  bucket_name = "testing-prod-27-temp"
-  force_destroy = true
-}
+#   project_id  = var.project_id
+#   bucket_name = "testing-prod-27-temp"
+#   force_destroy = true
+# }
 
-# 1. Declare the import mapping
-import {
-  to = module.temp_bucket.google_storage_bucket.data_bucket
-  id = "testing-prod-27-temp" # The real bucket name in GCP
-}
+# # 1. Declare the import mapping
+# import {
+#   to = module.temp_bucket.google_storage_bucket.data_bucket
+#   id = "testing-prod-27-temp" # The real bucket name in GCP
+# }
 
 # Create an bronze_qms BigQuery dataset for the project
 module "bronze_qms_bigquery_dataset" {
