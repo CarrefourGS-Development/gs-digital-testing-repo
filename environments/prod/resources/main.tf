@@ -98,7 +98,7 @@ module "temp_bucket" {
 # 1. Declare the import mapping
 import {
   to = module.temp_bucket.google_storage_bucket.data_bucket
-  id = "c4-gs-my-existing-bucket-name" # The real bucket name in GCP
+  id = "testing-prod-27-temp" # The real bucket name in GCP
 }
 
 # Create an bronze_qms BigQuery dataset for the project
