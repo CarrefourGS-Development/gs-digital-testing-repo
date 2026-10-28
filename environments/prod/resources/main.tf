@@ -86,6 +86,15 @@ module "cloudbuild_bucket" {
   force_destroy = true
 }
 
+# Create a GCS bucket for the project #Testing only
+module "temp_bucket" {
+  source = "../../../modules/data_platform/bucket"
+
+  project_id  = var.project_id
+  bucket_name = "testing-prod-27-temp"
+  force_destroy = true
+}
+
 # Create an bronze_qms BigQuery dataset for the project
 module "bronze_qms_bigquery_dataset" {
   source = "../../../modules/data_platform/bigquery"
