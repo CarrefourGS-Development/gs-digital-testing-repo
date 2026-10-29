@@ -40,7 +40,7 @@ resource "time_sleep" "wait_for_api_propagation" {
 
 # Create a template bucket
 module "template_bucket" {
-  source = "../../modules/data_platform/bucket"
+  source = "../../../modules/data_platform/bucket"
 
   project_id = var.project_id
   bucket_name = "c4-gs-${var.project_id}-${var.environment}"
@@ -50,7 +50,7 @@ module "template_bucket" {
 
 # Create a template dataset
 module "template_bigquery_dataset" {
-  source = "../../modules/data_platform/bigquery"
+  source = "../../../modules/data_platform/bigquery"
 
   project_id    = var.project_id
   project_name  = var.project_id
