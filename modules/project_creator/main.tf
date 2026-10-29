@@ -11,7 +11,7 @@ locals {
 
 # Create a new GCP project if it doesn't exist
 resource "google_project" "app_project" {
-  count           = local.project_exists ? 0 : 1
+  # count           = local.project_exists ? 0 : 1
   name            = var.project_id
   project_id      = var.project_id
   # org_id          = var.org_id

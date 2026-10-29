@@ -13,6 +13,7 @@
 resource "google_storage_bucket" "data_bucket" {
   # count                    = local.bucket_exists ? 0 : 1
   name                     = var.bucket_name
+  project                  = var.project_id
   location                 = var.location
   force_destroy            = var.force_destroy
   public_access_prevention = "enforced"

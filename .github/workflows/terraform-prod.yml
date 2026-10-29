@@ -46,7 +46,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Authenticate to GCP (Prod)
+    - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
@@ -81,7 +81,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Authenticate to GCP (Prod)
+    - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
@@ -123,7 +123,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Authenticate to GCP (Prod)
+    - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
@@ -158,7 +158,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Authenticate to GCP (Prod)
+    - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/194970303602/locations/global/workloadIdentityPools/gs-digital-github-pool-dev/providers/gs-digital-github-provider-dev'
