@@ -31,3 +31,32 @@ resource "google_project_service" "enabled_apis" {
 
   depends_on = [ module.project_creator ]
 }
+
+# Wait for API propagation (After initial API enabling, we need to wait it to propagate)
+resource "time_sleep" "wait_for_api_propagation" {
+  depends_on      = [google_project_service.enabled_apis]
+  create_duration = "60s"
+}
+
+# Create a template bucket
+module "template_bucket" {
+  source = "../../modules/data_platform/bucket"
+
+  project_id = var.project_id
+  bucket_name = "c4-gs-${var.project_id}-${var.environment}"
+
+  depends_on = [ time_sleep.wait_for_api_propagation ]
+}
+
+# Create a template dataset
+module "template_bigquery_dataset" {
+  source = "../../modules/data_platform/bigquery"
+
+  project_id    = var.project_id
+  project_name  = var.project_id
+  dataset_id    = "template"
+  location      = var.location
+  force_destroy = var.force_destroy
+
+  depends_on = [ time_sleep.wait_for_api_propagation ]
+}
