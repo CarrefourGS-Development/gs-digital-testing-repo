@@ -23,7 +23,7 @@ resource "google_project_service" "enabled_apis" {
     "eventarc.googleapis.com",
     "secretmanager.googleapis.com"
   ])
-
+ 
   project = var.project_id
   service = each.key
 
