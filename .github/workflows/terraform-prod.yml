@@ -24,7 +24,7 @@ on:
         default: false
 
 env:
-  PROJECT_ID: "testing-dev-2a"
+  PROJECT_ID: "testing-dev-1a"
 
 permissions:
   contents: read
