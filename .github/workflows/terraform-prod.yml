@@ -24,7 +24,7 @@ on:
         default: false
 
 env:
-  PROJECT_ID: "testing-prod-1j"
+  PROJECT_ID: "testing-dev-2a"
 
 permissions:
   contents: read
@@ -36,7 +36,7 @@ jobs:
   # -----------------------------------------------------------------
   terraform-plan-create-project:
     name: 'Terraform Plan (Create Project/ Enable API)'
-    if: ${{ github.event.inputs.create_new_project == 'true' }}
+    if: ${{ github.event.inputs.create_new_project == 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -69,7 +69,7 @@ jobs:
   terraform-apply-create-project:
     name: 'Terraform Apply (Create Project/ Enable API)'
     needs: terraform-plan-create-project
-    if: ${{ github.event.inputs.create_new_project == 'true' }}
+    if: ${{ github.event.inputs.create_new_project == 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     environment: production # Triggers native GitHub environment approval UI
  
@@ -113,7 +113,7 @@ jobs:
     name: 'Terraform Plan'
     # needs: [terraform-apply-create-project]
     # if: ${{ !cancelled() && !failure() }}
-    if: ${{ github.event.inputs.create_new_project != 'true' }}
+    if: ${{ github.event.inputs.create_new_project != 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -147,7 +147,7 @@ jobs:
     name: 'Terraform Apply'
     needs: [terraform-plan]
     # if: ${{ !cancelled() && !failure() }}
-    if: ${{ github.event.inputs.create_new_project != 'true' }}
+    if: ${{ github.event.inputs.create_new_project != 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     environment: production # Triggers native GitHub environment approval UI
     defaults:
