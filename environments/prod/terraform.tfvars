@@ -1,5 +1,5 @@
-project_id      = "testing-prod-4a" # GCP Project ID
-project_name    = "testing-prod-4a" # GCP Project Name
+project_id      = "testing-dev-4a" # GCP Project ID
+project_name    = "testing-dev-4a" # GCP Project Name
 tfstate_bucket_name = "gs-digital-brz-qms-tfstate-dev" # GCS bucket for storing Terraform state files
 # project_number  = "419027442564"                  #  GCP Project Number
 project_number  = "0"                  #  GCP Project Number
