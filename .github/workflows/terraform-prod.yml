@@ -24,7 +24,7 @@ on:
         default: false
 
 env:
-  PROJECT_ID: "testing-dev-4a"
+  PROJECT_ID: "gs-digital-manual-testing-prod"
 
 permissions:
   contents: read
