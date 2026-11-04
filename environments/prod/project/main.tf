@@ -43,7 +43,7 @@ module "template_bucket" {
   source = "../../../modules/data_platform/bucket"
 
   project_id = var.project_id
-  bucket_name = "c4-gs-${var.project_id}-${var.environment}"
+  bucket_name = "c4-${var.project_id}"
 
   depends_on = [ time_sleep.wait_for_api_propagation ]
 }

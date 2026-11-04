@@ -1,7 +1,6 @@
 project_id      = "gs-digital-manual-testing-prod" # GCP Project ID
 project_name    = "gs-digital-manual-testing-prod" # GCP Project Name
 # project_number  = "419027442564"                  #  GCP Project Number
-project_number  = "0"                  #  GCP Project Number
 org_id          = "1066591588807"            #  GCP Org ID
 billing_account = "01620C-7AD1FB-2593E4"    #  Billing Account ID
 environment     = "prod"

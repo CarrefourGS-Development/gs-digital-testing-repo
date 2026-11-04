@@ -8,10 +8,10 @@ variable "project_name" {
   description = "New GCP Project Name to create"
 }
 
-variable "project_number" {
-  type        = string
-  description = "New GCP Project Number to create"
-}
+# variable "project_number" {
+#   type        = string
+#   description = "New GCP Project Number to create"
+# }
 
 variable "org_id" {
   type        = string
