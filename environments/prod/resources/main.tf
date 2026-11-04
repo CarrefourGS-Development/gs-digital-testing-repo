@@ -181,10 +181,10 @@ module "silver_qms_bigquery_dataset" {
 # }
 
 # Wait for API propagation (After initial API enabling, we need to wait it to propagate)
-resource "time_sleep" "wait_for_api_propagation" {
-  depends_on      = [google_project_service.enabled_apis]
-  create_duration = "60s"
-}
+# resource "time_sleep" "wait_for_api_propagation" {
+#   depends_on      = [google_project_service.enabled_apis]
+#   create_duration = "60s"
+# }
 
 # Create a template bucket
 module "template_bucket" {
