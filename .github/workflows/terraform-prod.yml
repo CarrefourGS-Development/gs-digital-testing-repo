@@ -1,6 +1,6 @@
 name: 'PROD'
 
-run-name: "PROD - ${{ inputs.create_new_project == true && format('Create Project/ Enable API') || format('Deploy Resources') }}"
+run-name: "PROD - ${{ inputs.admin_mode == true && format('Admin Mode') || format('Deploy Resources') }}"
 
 on:
   # push:
@@ -18,9 +18,9 @@ on:
   #     - 'modules/**'
   workflow_dispatch:
     inputs:
-      create_new_project:
+      admin_mode:
         type: boolean
-        description: 'Create GCP Project/ Enable API'
+        description: 'GCP Admin Mode'
         default: false
 
 env:
@@ -32,15 +32,15 @@ permissions:
 
 jobs:
   # -----------------------------------------------------------------
-  # JOB 1: TERRAFORM PLAN (Create project/ Enable API)
+  # JOB 1: TERRAFORM PLAN (Admin Mode)
   # -----------------------------------------------------------------
-  terraform-plan-create-project:
-    name: 'Terraform Plan (Create Project/ Enable API)'
-    if: ${{ github.event.inputs.create_new_project == 'true' && github.ref_name != 'main' }}
+  terraform-plan-admin-mode:
+    name: 'Terraform Plan (Admin Mode)'
+    if: ${{ github.event.inputs.admin_mode == 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./environments/prod/project
+        working-directory: ./environments/prod/admin
 
     steps:
     - name: Checkout Code
@@ -58,24 +58,24 @@ jobs:
         terraform_version: 1.7.0
 
     - name: Terraform Init
-      run: terraform init -var-file="../terraform.tfvars" -backend-config="prefix=projects/${{ env.PROJECT_ID }}/project"
+      run: terraform init -var-file="../terraform.tfvars" -backend-config="prefix=projects/${{ env.PROJECT_ID }}/admin"
 
     - name: Terraform Plan
       run: terraform plan -input=false -var-file="../terraform.tfvars"
 
   # -----------------------------------------------------------------
-  # JOB 2: TERRAFORM APPLY (Create project/ Enable API)
+  # JOB 2: TERRAFORM APPLY (Admin Mode)
   # -----------------------------------------------------------------
-  terraform-apply-create-project:
-    name: 'Terraform Apply (Create Project/ Enable API)'
-    needs: terraform-plan-create-project
-    if: ${{ github.event.inputs.create_new_project == 'true' && github.ref_name != 'main' }}
+  terraform-apply-admin-mode:
+    name: 'Terraform Apply (Admin Mode)'
+    needs: terraform-plan-admin-mode
+    if: ${{ github.event.inputs.admin_mode == 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     environment: production # Triggers native GitHub environment approval UI
  
     defaults:
       run:
-        working-directory: ./environments/prod/project
+        working-directory: ./environments/prod/admin
 
     steps:
     - name: Checkout Code
@@ -101,7 +101,7 @@ jobs:
         terraform_version: 1.7.0
 
     - name: Terraform Init
-      run: terraform init -var-file="../terraform.tfvars" -backend-config="prefix=projects/${{ env.PROJECT_ID }}/project"
+      run: terraform init -var-file="../terraform.tfvars" -backend-config="prefix=projects/${{ env.PROJECT_ID }}/admin"
 
     - name: Terraform Apply
       run: terraform apply -input=false -auto-approve -var-file="../terraform.tfvars"
@@ -111,9 +111,9 @@ jobs:
   # -----------------------------------------------------------------
   terraform-plan:
     name: 'Terraform Plan'
-    # needs: [terraform-apply-create-project]
+    # needs: [terraform-apply-admin-mode]
     # if: ${{ !cancelled() && !failure() }}
-    if: ${{ github.event.inputs.create_new_project != 'true' && github.ref_name != 'main' }}
+    if: ${{ github.event.inputs.admin_mode != 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -147,7 +147,7 @@ jobs:
     name: 'Terraform Apply'
     needs: [terraform-plan]
     # if: ${{ !cancelled() && !failure() }}
-    if: ${{ github.event.inputs.create_new_project != 'true' && github.ref_name != 'main' }}
+    if: ${{ github.event.inputs.admin_mode != 'true' && github.ref_name != 'main' }}
     runs-on: ubuntu-latest
     environment: production # Triggers native GitHub environment approval UI
     defaults:

@@ -179,3 +179,28 @@ module "silver_qms_bigquery_dataset" {
 #   force_destroy   = true
 #   deletion_policy = "DELETE"
 # }
+
+# Wait for API propagation (After initial API enabling, we need to wait it to propagate)
+resource "time_sleep" "wait_for_api_propagation" {
+  depends_on      = [google_project_service.enabled_apis]
+  create_duration = "60s"
+}
+
+# Create a template bucket
+module "template_bucket" {
+  source = "../../../modules/data_platform/bucket"
+
+  project_id = var.project_id
+  bucket_name = "c4-${var.project_id}"
+}
+
+# Create a template dataset
+module "template_bigquery_dataset" {
+  source = "../../../modules/data_platform/bigquery"
+
+  project_id    = var.project_id
+  project_name  = var.project_id
+  dataset_id    = "template"
+  location      = var.location
+  force_destroy = var.force_destroy
+}
