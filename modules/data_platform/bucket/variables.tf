@@ -25,9 +25,3 @@ variable "force_destroy" {
   default     = false
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
 }
-
-variable "deletion_protection" {
-  type        = bool
-  default     = true
-  description = "Prevents accidental table deletion"
-}
