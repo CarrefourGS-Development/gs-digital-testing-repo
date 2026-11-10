@@ -25,14 +25,8 @@ variable "force_destroy" {
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
 }
 
-variable "deletion_protection" {
-  type        = bool
-  default     = false
-  description = "Prevents accidental table deletion"
-}
-
 variable "deletion_policy" {
   type        = string
-  default     = "DELETE"
+  default     = "PREVENT"
   description = "Sets the deletion policy for the BigQuery dataset. Options: DELETE, ABANDON, PREVENT"
 }
