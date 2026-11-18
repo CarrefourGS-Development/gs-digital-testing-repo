@@ -24,7 +24,7 @@ on:
         default: false
 
 env:
-  PROJECT_ID: "testing-a2-prod"
+  PROJECT_ID: "testing-a3-prod"
 
 permissions:
   contents: read

@@ -1,6 +1,6 @@
-project_id      = "testing-a2-prod" # GCP Project ID
-project_name    = "testing-a2-prod" # GCP Project Name
-prefix          = "testing-a2" # GCP Project Prefix
+project_id      = "testing-a3-prod" # GCP Project ID
+project_name    = "testing-a3-prod" # GCP Project Name
+prefix          = "testing-a3" # GCP Project Prefix
 # project_number  = "419027442564"                  #  GCP Project Number
 org_id          = "1066591588807"            #  GCP Org ID
 billing_account = "01620C-7AD1FB-2593E4"    #  Billing Account ID
