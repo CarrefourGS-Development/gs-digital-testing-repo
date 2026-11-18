@@ -14,14 +14,20 @@ variable "bucket_name" {
   description = "GCS Bucket name for data storage/ingestion"
 }
 
-variable "gcs_lifecycle_age_days" {
+variable "retention_duration_seconds" {
   type        = number
-  default     = 7
-  description = "Number of days before auto-deleting old bucket objects"
+  default     = 604800 # 7 days in seconds
+  description = "Duration in seconds to retain objects in the bucket"
 }
 
 variable "force_destroy" {
   type        = bool
   default     = false
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
+}
+
+variable "storage_class" {
+  type        = string
+  default     = "STANDARD"
+  description = "GCS Storage Class (e.g., STANDARD, NEARLINE, COLDLINE, ARCHIVE)"
 }

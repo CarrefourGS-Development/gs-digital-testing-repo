@@ -16,17 +16,17 @@ resource "google_storage_bucket" "data_bucket" {
   project                  = var.project_id
   location                 = var.location
   force_destroy            = var.force_destroy
+  storage_class            = var.storage_class
   public_access_prevention = "enforced"
 
   uniform_bucket_level_access = true
 
-  lifecycle_rule {
-    condition {
-      age = var.gcs_lifecycle_age_days
-    }
-    action {
-      type = "Delete"
-    }
+  versioning {
+    enabled = true
+  }
+
+  soft_delete_policy {
+    retention_duration_seconds = var.retention_duration_seconds
   }
 
   labels = {

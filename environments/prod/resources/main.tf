@@ -3,6 +3,7 @@ data "google_project" "app_project" {
   project_id = var.project_id
 }
 
+# Create a template service account for the project
 module "app_service_account" {
   source = "../../../modules/iam/service_account"
 
@@ -18,6 +19,7 @@ module "app_service_account" {
   ]
 }
 
+# Create a service account key for the template service account
 resource "google_service_account_key" "testing_sa_key_1" {
   # References the service account name/email exported by the module
   service_account_id = module.app_service_account.service_account_name
@@ -28,6 +30,7 @@ resource "google_service_account_key" "testing_sa_key_1" {
   ]
 }
 
+# Create a secret in Secret Manager to store the service account key
 module "testing_sa_key_1_secret_manager" {
   source = "../../../modules/iam/secret_manager"
 
@@ -43,159 +46,32 @@ module "testing_sa_key_1_secret_manager" {
   enabled = false
 }
 
-resource "google_service_account_key" "testing_sa_key_2" {
-  # References the service account name/email exported by the module
-  service_account_id = module.app_service_account.service_account_name
-
-  # Guarantees the SA and all IAM role bindings are fully applied before creating the key
-  depends_on = [
-    module.app_service_account
-  ]
-}
-
-module "testing_sa_key_2_secret_manager" {
-  source = "../../../modules/iam/secret_manager"
-
-  project_id = var.project_id
-  service_account_id = module.app_service_account.service_account_name
-  secret_id = "${module.app_service_account.service_account_id}-key-2"
-  secret_data = base64decode(google_service_account_key.testing_sa_key_2.private_key)
-
-  annotations = {
-    service_account_id = module.app_service_account.service_account_name
-    service_account_key_id = google_service_account_key.testing_sa_key_2.id
-  }
-  enabled = true
-}
-
-# Create a GCS bucket for the project
-module "landing_bucket" {
-  source = "../../../modules/data_platform/bucket"
-
-  project_id  = var.project_id
-  bucket_name = "c4-${var.project_name}-landing-${var.environment}"
-  force_destroy = true
-}
-
-# Create a GCS bucket for the project
-module "cloudbuild_bucket" {
-  source = "../../../modules/data_platform/bucket"
-
-  project_id  = var.project_id
-  bucket_name = "c4-${var.project_name}-cloudbuild-${var.environment}"
-  force_destroy = true
-}
-
-# # Create a GCS bucket for the project #Testing only
-# module "temp_bucket" {
-#   source = "../../../modules/data_platform/bucket"
-
-#   project_id  = var.project_id
-#   bucket_name = "testing-prod-27-temp"
-#   force_destroy = true
-# }
-
-# # 1. Declare the import mapping
-# import {
-#   to = module.temp_bucket.google_storage_bucket.data_bucket
-#   id = "testing-prod-27-temp" # The real bucket name in GCP
-# }
-
-# Create an bronze_qms BigQuery dataset for the project
-module "bronze_qms_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "bronze_qms"
-  location        = var.location
-  force_destroy   = true
-}
-
-# Create an ops_audit BigQuery dataset for the project
-module "ops_audit_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "ops_audit"
-  location        = var.location
-  force_destroy   = true
-}
-
-# Create an qms BigQuery dataset for the project
-module "qms_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "qms"
-  location        = var.location
-  force_destroy   = true
-}
-
-# Create an qms_silver BigQuery dataset for the project
-module "qms_silver_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "qms_silver"
-  location        = var.location
-  force_destroy   = true
-}
-
-# Create an silver_control BigQuery dataset for the project
-module "silver_control_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "silver_control"
-  location        = var.location
-  force_destroy   = true
-}
-
-# Create an silver_qms BigQuery dataset for the project
-module "silver_qms_bigquery_dataset" {
-  source = "../../../modules/data_platform/bigquery"
-
-  project_id      = var.project_id
-  project_name    = var.project_name
-  dataset_id      = "silver_qms"
-  location        = var.location
-  force_destroy   = true
-  deletion_policy = "DELETE"
-}
-
-# # Create an temp BigQuery dataset for the project
-# module "temp_bigquery_dataset" {
-#   source = "../../../modules/data_platform/bigquery"
-
-#   project_id      = var.project_id
-#   project_name    = var.project_name
-#   dataset_id      = "temp"
-#   location        = var.location
-#   force_destroy   = true
-#   deletion_policy = "DELETE"
-# }
-
-# Wait for API propagation (After initial API enabling, we need to wait it to propagate)
-# resource "time_sleep" "wait_for_api_propagation" {
-#   depends_on      = [google_project_service.enabled_apis]
-#   create_duration = "60s"
-# }
-
 # Create a template bucket
-module "template_bucket" {
+# bucket name limitation (write in the script)
+# • Length: Must be between 3 and 63 characters long. (Domain-named buckets using dots can be up to 222 characters total, with each dot-separated segment max 63 characters, e.g. www.example.com).
+# • Allowed Characters: Only lowercase letters, numbers, dashes (-), underscores (_), and dots (.). (Note: names with dots require domain verification).
+# • Start and End: Must begin and end with a letter or number.
+# • IP Address: Cannot be formatted as an IP address in dotted-decimal notation (e.g., 192.168.5.4).
+# • Immutability: Once created, a bucket name cannot be changed; you must create a new bucket and migrate the data.
+module "create_bucket_template" {
   source = "../../../modules/data_platform/bucket"
 
   project_id = var.project_id
   bucket_name = "c4-${var.project_id}"
 }
 
+# Declare the import mapping if the bucket already exists in GCP
+# import {
+#   to = module.create_bucket_template.google_storage_bucket.data_bucket
+#   id = "testing-prod-27-temp" # The real bucket name in GCP
+# }
+
 # Create a template dataset
-module "template_bigquery_dataset" {
+# Case Sensitivity: Dataset names are case-sensitive, meaning DatasetName and datasetname would be considered different datasets.
+# Allowed Characters: Names can include lowercase letters (a-z), uppercase letters (A-Z), numbers (0-9), and underscores (_).
+# Length: Dataset names can be up to 1024 characters in length.
+# Starting Character: A dataset name must start with a letter (a-z, A-Z) or an underscore (_). Names starting with numbers or consisting solely of numbers do not comply with BigQuery’s naming conventions.
+module "create_bigquery_dataset_template" {
   source = "../../../modules/data_platform/bigquery"
 
   project_id    = var.project_id
@@ -203,4 +79,35 @@ module "template_bigquery_dataset" {
   dataset_id    = "template"
   location      = var.location
   force_destroy = var.force_destroy
+}
+
+# Import an existing BigQuery dataset into Terraform state (requires full GCP resource path)
+# import {
+#   to = module.create_bigquery_dataset_template.google_bigquery_dataset.data_dataset
+#   id = "projects/${var.project_id}/datasets/template"
+# }
+
+# Create a cloud function template
+# Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
+module "create_cloud_function_template" {
+  source = "../../../modules/cloud_functions"
+  project_id           = var.project_id
+  bucket_name          = "c4-${var.project_name}-cloud-functions-archives-${var.environment}"
+  object_name          = "return_template.zip"
+  source_dir           = "../../../modules/cloud_functions/python/return_template"
+  output_path          = "cloud_functions/return_template/return_template.zip"
+  function_name        = "return_template"
+  location             = var.location
+  runtime              = "python313"
+  entry_point          = "return_template"
+  min_instance_count   = 0
+  max_instance_count   = 1
+  ingress_settings     = "ALLOW_ALL"
+  available_memory     = "512Mi"
+  available_cpu        = "0.167"
+  timeout_seconds      = 60
+  build_environment_variables = {
+  }
+  service_environment_variables = {
+  }
 }

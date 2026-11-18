@@ -25,6 +25,7 @@ variable "folder_id" {
 
 variable "billing_account" {
   type        = string
+  default     = "01620C-7AD1FB-2593E4"
   description = "GCP Billing Account ID"
 }
 
@@ -35,7 +36,7 @@ variable "environment" {
 
 variable "location" {
   type        = string
-  default     = "US"
+  default     = "asia-east2"
 }
 
 variable "force_destroy" {

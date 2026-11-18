@@ -18,3 +18,28 @@ resource "google_project_service" "enabled_apis" {
 
   disable_on_destroy = false 
 }
+
+# Grant specific IAM roles to a set of users for the project
+locals {
+  target_users = [
+    "user:user-a@example.com",
+    "user:user-b@example.com",
+    "user:user-c@example.com",
+  ]
+
+  target_roles = toset([
+    "roles/storage.objectAdmin",
+    "roles/cloudfunctions.viewer",
+    "roles/cloudfunctions.developer",
+    "roles/cloudfunctions.invoker",
+    "roles/bigquery.dataOwner"
+  ])
+}
+
+resource "google_project_iam_binding" "authoritative_roles" {
+  for_each = local.target_roles
+
+  project = var.project_id
+  role    = each.value
+  members = local.target_users
+}
