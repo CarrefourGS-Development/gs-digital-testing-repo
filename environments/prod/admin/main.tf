@@ -16,7 +16,7 @@ resource "google_project_service" "enabled_apis" {
   project = var.project_id
   service = each.key
 
-  disable_on_destroy = false 
+  disable_on_destroy = true
 }
 
 # Grant specific IAM roles to a set of users for the project
@@ -39,11 +39,11 @@ locals {
   ])
 }
 
-# resource "google_project_iam_binding" "authoritative_roles" {
-#   provider = google.iam_admin
-#   for_each = local.target_roles
+resource "google_project_iam_binding" "authoritative_roles" {
+  provider = google.iam_admin
+  for_each = local.target_roles
 
-#   project = var.project_id
-#   role    = each.value
-#   members = local.target_users
-# }
+  project = var.project_id
+  role    = each.value
+  members = local.target_users
+}
