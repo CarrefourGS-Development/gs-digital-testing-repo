@@ -1,9 +1,10 @@
-project_id      = "testing-dev-martin5" # GCP Project ID
-project_name    = "testing-dev-martin5" # GCP Project Name
+project_id      = "testing-a2-prod" # GCP Project ID
+project_name    = "testing-a2-prod" # GCP Project Name
+prefix          = "testing-a2" # GCP Project Prefix
 # project_number  = "419027442564"                  #  GCP Project Number
 org_id          = "1066591588807"            #  GCP Org ID
 billing_account = "01620C-7AD1FB-2593E4"    #  Billing Account ID
-environment     = "dev"
-folder_id       = "142123779763" # GCP Folder ID (Dev Datawarehouse)
-# folder_id       = "1010241679022" # GCP Folder ID (Prod Datawarehouse)
+environment     = "prod"
+# folder_id       = "142123779763" # GCP Folder ID (Dev Datawarehouse)
+folder_id       = "1010241679022" # GCP Folder ID (Prod Datawarehouse)
 force_destroy   = false 
