@@ -40,6 +40,7 @@ locals {
 }
 
 resource "google_project_iam_binding" "authoritative_roles" {
+  provider = google.iam_admin
   for_each = local.target_roles
 
   project = var.project_id
