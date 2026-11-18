@@ -22,12 +22,12 @@ resource "google_project_service" "enabled_apis" {
 # Grant specific IAM roles to a set of users for the project
 locals {
   target_users = [
-    "user:george_lam@example.com",
-    "user:ken_tsui@example.com",
-    "user:lucy_ma@example.com",
+    "user:george_lam@carrefour.com",
+    "user:ken_tsui@carrefour.com",
+    "user:lucy_ma@carrefour.com",
     "user:amy_nguyen@carrefour.com",
-    "user:sophie_peng@example.com",
-    "user:martin_chau@example.com",
+    "user:sophie_peng@carrefour.com",
+    "user:martin_chau@carrefour.com",
   ]
 
   target_roles = toset([
