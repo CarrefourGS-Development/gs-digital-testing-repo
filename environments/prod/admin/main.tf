@@ -35,7 +35,8 @@ locals {
     "roles/cloudfunctions.viewer",
     "roles/cloudfunctions.developer",
     "roles/cloudfunctions.invoker",
-    "roles/bigquery.dataOwner"
+    "roles/bigquery.dataOwner",
+    "roles/storage.bucketViewer"
   ])
 }
 
