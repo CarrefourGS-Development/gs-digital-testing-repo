@@ -56,8 +56,12 @@ module "testing_sa_key_1_secret_manager" {
 module "create_bucket_template" {
   source = "../../../modules/data_platform/bucket"
 
-  project_id = var.project_id
-  bucket_name = "c4-${var.project_id}"
+  project_id    = var.project_id
+  bucket_name   = "c4-${var.project_id}"
+  location      = var.location
+  force_destroy = var.force_destroy
+
+  storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
 }
 
 # Declare the import mapping if the bucket already exists in GCP
@@ -99,7 +103,7 @@ module "create_cloud_function_template" {
   function_name        = "return_template"
   location             = var.location
   runtime              = "python313"
-  entry_point          = "return_template"
+  entry_point          = "testing"
   min_instance_count   = 0
   max_instance_count   = 1
   ingress_settings     = "ALLOW_ALL"
