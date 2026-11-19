@@ -5,7 +5,7 @@ resource "google_project_service" "enabled_apis" {
     # "storage.googleapis.com",
     "iamcredentials.googleapis.com",
     "cloudresourcemanager.googleapis.com",
-    # "cloudfunctions.googleapis.com",
+    "cloudfunctions.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
     "artifactregistry.googleapis.com",
