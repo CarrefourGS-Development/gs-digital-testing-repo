@@ -27,7 +27,7 @@ locals {
     "user:lucy_ma@carrefour.com",
     "user:amy_nguyen@carrefour.com",
     "user:sophie_peng@carrefour.com",
-    "user:martin_chau@carrefour.com",
+    # "user:martin_chau@carrefour.com",
   ]
 
   target_roles = toset([
@@ -38,7 +38,8 @@ locals {
     "roles/bigquery.dataOwner",
     "roles/storage.bucketViewer",
     "roles/monitoring.viewer",
-    "roles/logging.viewer"
+    "roles/logging.viewer",
+    "roles/storage.buckets.getIamPolicy",
   ])
 }
 
