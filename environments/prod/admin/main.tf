@@ -1,8 +1,8 @@
 # Enable Required APIs inside the new project
 resource "google_project_service" "enabled_apis" {
   for_each = toset([
-    "bigquery.googleapis.com",
-    "storage.googleapis.com",
+    # "bigquery.googleapis.com",
+    # "storage.googleapis.com",
     "iamcredentials.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "cloudfunctions.googleapis.com",
@@ -27,7 +27,7 @@ locals {
     "user:lucy_ma@carrefour.com",
     "user:amy_nguyen@carrefour.com",
     "user:sophie_peng@carrefour.com",
-    # "user:martin_chau@carrefour.com",
+    "user:martin_chau@carrefour.com",
   ]
 
   target_roles = toset([
