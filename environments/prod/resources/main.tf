@@ -93,25 +93,25 @@ module "create_bigquery_dataset_template" {
 
 # Create a cloud function template
 # Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
-module "create_cloud_function_template" {
-  source = "../../../modules/cloud_functions"
-  project_id           = var.project_id
-  bucket_name          = "c4-${var.project_name}-cloud-functions-archives-${var.environment}"
-  object_name          = "return_template.zip"
-  source_dir           = "../../../modules/cloud_functions/python/return_template"
-  output_path          = "cloud_functions/return_template/return_template.zip"
-  function_name        = "return_template"
-  location             = var.location
-  runtime              = "python313"
-  entry_point          = "testing"
-  min_instance_count   = 0
-  max_instance_count   = 1
-  ingress_settings     = "ALLOW_ALL"
-  available_memory     = "512Mi"
-  available_cpu        = "0.167"
-  timeout_seconds      = 60
-  build_environment_variables = {
-  }
-  service_environment_variables = {
-  }
-}
+# module "create_cloud_function_template" {
+#   source = "../../../modules/cloud_functions"
+#   project_id           = var.project_id
+#   bucket_name          = "c4-${var.project_name}-cloud-functions-archives-${var.environment}"
+#   object_name          = "return_template.zip"
+#   source_dir           = "../../../modules/cloud_functions/python/return_template"
+#   output_path          = "cloud_functions/return_template/return_template.zip"
+#   function_name        = "return_template"
+#   location             = var.location
+#   runtime              = "python313"
+#   entry_point          = "testing"
+#   min_instance_count   = 0
+#   max_instance_count   = 1
+#   ingress_settings     = "ALLOW_ALL"
+#   available_memory     = "512Mi"
+#   available_cpu        = "0.167"
+#   timeout_seconds      = 60
+#   build_environment_variables = {
+#   }
+#   service_environment_variables = {
+#   }
+# }
