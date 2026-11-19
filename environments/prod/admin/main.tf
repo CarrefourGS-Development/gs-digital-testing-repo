@@ -39,7 +39,7 @@ locals {
     "roles/storage.bucketViewer",
     "roles/monitoring.viewer",
     "roles/logging.viewer",
-    "roles/storage.buckets.getIamPolicy",
+    "roles/iam.securityReviewer",
   ])
 }
 
