@@ -17,6 +17,7 @@ resource "google_project_service" "enabled_apis" {
   service = each.key
 
   disable_on_destroy = true
+  disable_dependent_services = true
 }
 
 # Grant specific IAM roles to a set of users for the project
