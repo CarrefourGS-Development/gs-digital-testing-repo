@@ -8,7 +8,7 @@ on:
       - 'modules/**'
 
 env:
-  PROJECT_ID: "testing-a3-prod"
+  PROJECT_ID: "testing-a4-prod"
 
 permissions:
   contents: read
