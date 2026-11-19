@@ -2,8 +2,8 @@
 resource "google_project_service" "enabled_apis" {
   for_each = toset([
     "bigquery.googleapis.com",
-    # "storage.googleapis.com",
-    # "storage-component.googleapis.com",
+    "storage.googleapis.com",
+    "storage-component.googleapis.com",
     "iamcredentials.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "cloudfunctions.googleapis.com",
