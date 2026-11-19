@@ -1,8 +1,8 @@
 # Enable Required APIs inside the new project
 resource "google_project_service" "enabled_apis" {
   for_each = toset([
-    # "bigquery.googleapis.com",
-    # "storage.googleapis.com",
+    "bigquery.googleapis.com",
+    "storage.googleapis.com",
     "iamcredentials.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "cloudfunctions.googleapis.com",
@@ -16,8 +16,8 @@ resource "google_project_service" "enabled_apis" {
   project = var.project_id
   service = each.key
 
-  disable_on_destroy = true
-  disable_dependent_services = true 
+  disable_on_destroy = false
+  disable_dependent_services = false 
 }
 
 # Grant specific IAM roles to a set of users for the project
