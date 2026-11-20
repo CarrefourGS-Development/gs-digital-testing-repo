@@ -40,7 +40,7 @@ resource "google_cloudfunctions2_function" "function" {
   location = var.location
  
   build_config {
-    runtime = var.runtime
+    runtime = var.runtime 
     entry_point = var.entry_point  # Set the entry point 
     environment_variables = var.build_environment_variables
 
