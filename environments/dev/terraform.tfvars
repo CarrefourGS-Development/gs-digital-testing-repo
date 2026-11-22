@@ -1,0 +1,10 @@
+project_id      = "gs-digital-brz-qms-dev" # GCP Project ID
+project_name    = "gs-digital-brz-qms-dev" # GCP Project Name
+prefix          = "gs-digital-brz-qms" # GCP Project Prefix
+# project_number  = "419027442564"                  #  GCP Project Number
+org_id          = "1066591588807"            #  GCP Org ID
+billing_account = "01620C-7AD1FB-2593E4"    #  Billing Account ID
+environment     = "dev"
+folder_id       = "142123779763" # GCP Folder ID (Dev Datawarehouse)
+# folder_id       = "1010241679022" # GCP Folder ID (Prod Datawarehouse)
+force_destroy   = false 
