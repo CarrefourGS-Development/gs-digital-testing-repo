@@ -150,4 +150,8 @@ module "create_cloud_function_template2" {
   }
   service_environment_variables = {
   }
+
+  depends_on = [
+    google_storage_bucket.cloud_function_bucket
+  ]
 }

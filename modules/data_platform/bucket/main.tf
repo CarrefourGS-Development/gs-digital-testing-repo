@@ -40,4 +40,6 @@ resource "google_storage_bucket_object" "files_folder" {
   name    = "files/.temp" # .temp is necessary to prevent the occasional error
   content = " " # Non-empty string required by the provider to satisfy API payload rules
   bucket  = var.bucket_name
+
+  depends_on = [google_storage_bucket.data_bucket]
 }
