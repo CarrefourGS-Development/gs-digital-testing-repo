@@ -9,15 +9,6 @@
 #   bucket_exists = contains(data.google_storage_buckets.check_bucket.buckets[*].name, var.bucket_name)
 # }
 
-resource "google_storage_bucket" "bucket" {
-  # count    = local.bucket_exists ? 0 : 1
-  name     = var.bucket_name  # Every bucket name must be globally unique
-  location = var.location
-  uniform_bucket_level_access = true
-
-  force_destroy = true
-}
-
 data "archive_file" "function_code" {
   type        = "zip"
   source_dir  = var.source_dir  # Replace with the local path to your source folder

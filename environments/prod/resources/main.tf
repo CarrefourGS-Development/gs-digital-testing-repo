@@ -92,11 +92,20 @@ module "create_bigquery_dataset_template" {
 # }
 
 # Create a cloud function template
+resource "google_storage_bucket" "cloud_function_bucket" {
+  # count    = local.bucket_exists ? 0 : 1
+  name     = "gcf-v2-sources-${var.project_id}-"  # Every bucket name must be globally unique
+  location = var.location
+  uniform_bucket_level_access = true
+
+  force_destroy = true
+}
+
 # Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
 module "create_cloud_function_template" {
   source = "../../../modules/cloud_functions"
   project_id           = var.project_id
-  bucket_name          = "c4-${var.project_name}-cloud-functions-archives-${var.environment}"
+  bucket_name          = "google_storage_bucket.cloud_function_bucket.name"
   object_name          = "return_template.zip"
   source_dir           = "../../../modules/cloud_functions/python/return_template"
   output_path          = "cloud_functions/return_template/return_template.zip"
@@ -114,12 +123,16 @@ module "create_cloud_function_template" {
   }
   service_environment_variables = {
   }
+
+  depends_on = [
+    google_storage_bucket.cloud_function_bucket
+  ]
 }
 
 module "create_cloud_function_template2" {
   source = "../../../modules/cloud_functions"
   project_id           = var.project_id
-  bucket_name          = "c4-${var.project_name}-cloud-functions-archives-${var.environment}"
+  bucket_name          = "google_storage_bucket.cloud_function_bucket.name"
   object_name          = "return_template.zip"
   source_dir           = "../../../modules/cloud_functions/python/return_template"
   output_path          = "cloud_functions/return_template/return_template.zip"
