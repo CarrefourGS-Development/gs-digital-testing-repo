@@ -34,6 +34,17 @@ resource "google_storage_bucket" "data_bucket" {
   }
 }
 
+resource "terraform_data" "destroy_guard" {
+  input = var.force_destroy
+
+  lifecycle {
+    precondition {
+      condition     = self.input
+      error_message = "Bucket destruction is blocked because force_destroy = true. Set force_destroy = false first."
+    }
+  }
+}
+
 # Create a dummy object ending in "/" to represent a directory
 resource "google_storage_bucket_object" "files_folder" {
   # count   = local.bucket_exists ? 0 : 1
