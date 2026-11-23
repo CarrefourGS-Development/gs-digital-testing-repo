@@ -105,7 +105,7 @@ resource "google_storage_bucket" "create_cloud_function_bucket" {
 module "create_cloud_function_template" {
   source = "../../../modules/cloud_functions"
   project_id           = var.project_id
-  bucket_name          = google_storage_bucket.cloud_function_bucket.name
+  bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
   object_name          = "return_template.zip"
   source_dir           = "../../../modules/cloud_functions/python/return_template"
   output_path          = "cloud_functions/return_template/return_template.zip"
@@ -125,14 +125,14 @@ module "create_cloud_function_template" {
   }
 
   depends_on = [
-    google_storage_bucket.cloud_function_bucket
+    google_storage_bucket.create_cloud_function_bucket
   ]
 }
 
 module "create_cloud_function_template2" {
   source = "../../../modules/cloud_functions"
   project_id           = var.project_id
-  bucket_name          = google_storage_bucket.cloud_function_bucket.name
+  bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
   object_name          = "return_template.zip"
   source_dir           = "../../../modules/cloud_functions/python/return_template"
   output_path          = "cloud_functions/return_template/return_template.zip"
@@ -152,6 +152,6 @@ module "create_cloud_function_template2" {
   }
 
   depends_on = [
-    google_storage_bucket.cloud_function_bucket
+    google_storage_bucket.create_cloud_function_bucket
   ]
 }
