@@ -92,6 +92,9 @@ module "create_bigquery_dataset_template" {
 # }
 
 # Create a cloud function template
+# When creating a cloud function, you need to create a GCS bucket to store the function code. The bucket name must be globally unique, 
+# so we use the project number and location to ensure uniqueness.
+# The naming convention for the bucket is: gcf-v2-sources-<project_number>-<location>
 resource "google_storage_bucket" "create_cloud_function_bucket" {
   # count    = local.bucket_exists ? 0 : 1
   name     = "gcf-v2-sources-${data.google_project.app_project.number}-${var.location}"  # Every bucket name must be globally unique
