@@ -92,10 +92,10 @@ module "create_bigquery_dataset_template" {
 # }
 
 # Create a cloud function template
-resource "google_storage_bucket" "cloud_function_bucket" {
+resource "google_storage_bucket" "create_cloud_function_bucket" {
   # count    = local.bucket_exists ? 0 : 1
-  name     = "gcf-v2-sources-${var.project_id}-${var.location}"  # Every bucket name must be globally unique
-  location = var.location
+  name     = "gcf-v2-sources-${data.google_project.app_project.number}-${var.location}"  # Every bucket name must be globally unique
+  location = var.location 
   uniform_bucket_level_access = true
 
   force_destroy = true
