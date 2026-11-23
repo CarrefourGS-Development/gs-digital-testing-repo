@@ -59,7 +59,6 @@ module "create_bucket_template" {
   project_id    = var.project_id
   bucket_name   = "c4-${var.project_id}"
   location      = var.location
-  force_destroy = var.force_destroy
 
   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
 }
@@ -82,7 +81,6 @@ module "create_bigquery_dataset_template" {
   project_name  = var.project_id
   dataset_id    = "template"
   location      = var.location
-  force_destroy = var.force_destroy
 }
 
 # Import an existing BigQuery dataset into Terraform state (requires full GCP resource path)
@@ -102,6 +100,10 @@ resource "google_storage_bucket" "create_cloud_function_bucket" {
   uniform_bucket_level_access = true
 
   force_destroy = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # import {

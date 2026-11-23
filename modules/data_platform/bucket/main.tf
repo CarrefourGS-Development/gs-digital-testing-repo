@@ -15,7 +15,6 @@ resource "google_storage_bucket" "data_bucket" {
   name                     = var.bucket_name
   project                  = var.project_id
   location                 = var.location
-  force_destroy            = var.force_destroy
   storage_class            = var.storage_class
   public_access_prevention = "enforced"
 
@@ -29,19 +28,15 @@ resource "google_storage_bucket" "data_bucket" {
     retention_duration_seconds = var.retention_duration_seconds
   }
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   labels = {
     managed_by  = "terraform"
   }
 }
 
-resource "terraform_data" "destroy_guard" {
-  lifecycle {
-    precondition {
-      condition     = var.force_destroy != var.prevent_destroy
-      error_message = "Bucket destruction is blocked because force_destroy == prevent_destroy. Set force_destroy != prevent_destroy first."
-    }
-  }
-}
 
 # Create a dummy object ending in "/" to represent a directory
 resource "google_storage_bucket_object" "files_folder" {
