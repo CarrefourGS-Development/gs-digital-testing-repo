@@ -35,12 +35,10 @@ resource "google_storage_bucket" "data_bucket" {
 }
 
 resource "terraform_data" "destroy_guard" {
-  input = var.force_destroy
-
   lifecycle {
     precondition {
-      condition     = var.force_destroy
-      error_message = "Bucket destruction is blocked because force_destroy = true. Set force_destroy = false first."
+      condition     = var.force_destroy != var.prevent_destroy
+      error_message = "Bucket destruction is blocked because force_destroy == prevent_destroy. Set force_destroy != prevent_destroy first."
     }
   }
 }

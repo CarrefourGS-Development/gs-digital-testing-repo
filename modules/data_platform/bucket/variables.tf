@@ -26,6 +26,12 @@ variable "force_destroy" {
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
 }
 
+variable "prevent_destroy" {
+  type        = bool
+  default     = true
+  description = "Prevents destroying GCS buckets/BQ datasets during cleanup"
+}
+
 variable "storage_class" {
   type        = string
   default     = "STANDARD"
