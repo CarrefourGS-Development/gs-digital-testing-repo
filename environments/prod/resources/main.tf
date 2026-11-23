@@ -101,6 +101,11 @@ resource "google_storage_bucket" "create_cloud_function_bucket" {
   force_destroy = true
 }
 
+import {
+  to = module.create_cloud_function_bucket.google_storage_bucket.data_bucket
+  id = "gcf-v2-sources-${data.google_project.app_project.number}-${var.location}" # The real bucket name in GCP
+}
+
 # Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
 module "create_cloud_function_template" {
   source = "../../../modules/cloud_functions"
