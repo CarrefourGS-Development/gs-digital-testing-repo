@@ -39,7 +39,7 @@ resource "terraform_data" "destroy_guard" {
 
   lifecycle {
     precondition {
-      condition     = self.input
+      condition     = var.force_destroy
       error_message = "Bucket destruction is blocked because force_destroy = true. Set force_destroy = false first."
     }
   }
