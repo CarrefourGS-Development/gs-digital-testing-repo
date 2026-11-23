@@ -101,62 +101,62 @@ resource "google_storage_bucket" "create_cloud_function_bucket" {
   force_destroy = true
 }
 
-import {
-  to = module.create_cloud_function_bucket.google_storage_bucket.data_bucket
-  id = "gcf-v2-sources-${data.google_project.app_project.number}-${var.location}" # The real bucket name in GCP
+# import {
+#   to = module.create_cloud_function_bucket.google_storage_bucket.data_bucket
+#   id = "gcf-v2-sources-${data.google_project.app_project.number}-${var.location}" # The real bucket name in GCP
+# }
+
+# Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
+module "create_cloud_function_template" {
+  source = "../../../modules/cloud_functions"
+  project_id           = var.project_id
+  bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
+  object_name          = "return_template.zip"
+  source_dir           = "../../../modules/cloud_functions/python/return_template"
+  output_path          = "cloud_functions/return_template/return_template.zip"
+  function_name        = "return_template"
+  location             = var.location
+  runtime              = "python313"
+  entry_point          = "testing"
+  min_instance_count   = 0
+  max_instance_count   = 1
+  ingress_settings     = "ALLOW_ALL"
+  available_memory     = "512Mi"
+  available_cpu        = "0.167"
+  timeout_seconds      = 60
+  build_environment_variables = {
+  }
+  service_environment_variables = {
+  }
+
+  depends_on = [
+    google_storage_bucket.create_cloud_function_bucket
+  ]
 }
 
-# # Naming Conventions: Must be 1–63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens
-# module "create_cloud_function_template" {
-#   source = "../../../modules/cloud_functions"
-#   project_id           = var.project_id
-#   bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
-#   object_name          = "return_template.zip"
-#   source_dir           = "../../../modules/cloud_functions/python/return_template"
-#   output_path          = "cloud_functions/return_template/return_template.zip"
-#   function_name        = "return_template"
-#   location             = var.location
-#   runtime              = "python313"
-#   entry_point          = "testing"
-#   min_instance_count   = 0
-#   max_instance_count   = 1
-#   ingress_settings     = "ALLOW_ALL"
-#   available_memory     = "512Mi"
-#   available_cpu        = "0.167"
-#   timeout_seconds      = 60
-#   build_environment_variables = {
-#   }
-#   service_environment_variables = {
-#   }
+module "create_cloud_function_template2" {
+  source = "../../../modules/cloud_functions"
+  project_id           = var.project_id
+  bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
+  object_name          = "return_template.zip"
+  source_dir           = "../../../modules/cloud_functions/python/return_template"
+  output_path          = "cloud_functions/return_template/return_template.zip"
+  function_name        = "return_template2"
+  location             = var.location
+  runtime              = "python313"
+  entry_point          = "testing"
+  min_instance_count   = 0
+  max_instance_count   = 1
+  ingress_settings     = "ALLOW_ALL"
+  available_memory     = "512Mi"
+  available_cpu        = "0.167"
+  timeout_seconds      = 60
+  build_environment_variables = {
+  }
+  service_environment_variables = {
+  }
 
-#   depends_on = [
-#     google_storage_bucket.create_cloud_function_bucket
-#   ]
-# }
-
-# module "create_cloud_function_template2" {
-#   source = "../../../modules/cloud_functions"
-#   project_id           = var.project_id
-#   bucket_name          = google_storage_bucket.create_cloud_function_bucket.name
-#   object_name          = "return_template.zip"
-#   source_dir           = "../../../modules/cloud_functions/python/return_template"
-#   output_path          = "cloud_functions/return_template/return_template.zip"
-#   function_name        = "return_template2"
-#   location             = var.location
-#   runtime              = "python313"
-#   entry_point          = "testing"
-#   min_instance_count   = 0
-#   max_instance_count   = 1
-#   ingress_settings     = "ALLOW_ALL"
-#   available_memory     = "512Mi"
-#   available_cpu        = "0.167"
-#   timeout_seconds      = 60
-#   build_environment_variables = {
-#   }
-#   service_environment_variables = {
-#   }
-
-#   depends_on = [
-#     google_storage_bucket.create_cloud_function_bucket
-#   ]
-# }
+  depends_on = [
+    google_storage_bucket.create_cloud_function_bucket
+  ]
+}
