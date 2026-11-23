@@ -8,7 +8,7 @@ on:
       - 'modules/**'
 
 env:
-  PROJECT_ID: "gs-digital-brz-qms-prod"
+  PROJECT_ID: "testing-a4-prod"
 
 permissions:
   contents: read

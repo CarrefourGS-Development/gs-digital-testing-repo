@@ -1,6 +1,6 @@
-project_id      = "gs-digital-brz-qms-prod" # GCP Project ID
-project_name    = "gs-digital-brz-qms-prod" # GCP Project Name
-prefix          = "gs-digital-brz-qms" # GCP Project Prefix
+project_id      = "testing-a4-prod" # GCP Project ID
+project_name    = "testing-a4-prod" # GCP Project Name
+prefix          = "testing-a4" # GCP Project Prefix
 # project_number  = "419027442564"                  #  GCP Project Number
 org_id          = "1066591588807"            #  GCP Org ID
 billing_account = "01620C-7AD1FB-2593E4"    #  Billing Account ID
