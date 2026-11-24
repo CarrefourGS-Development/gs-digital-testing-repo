@@ -39,34 +39,34 @@ variable "protected_folders" {
   description = "Set of folder paths to create (e.g., [\"raw/\", \"processed/\", \"archive/\"])"
 
   validation {
-    condition     = length(var.folders) > 0
+    condition     = length(var.protected_folders) > 0
     error_message = "At least one folder path must be specified in 'folders'."
   }
 
   validation {
     condition = alltrue([
-      for f in var.folders : trimspace(f) != "" && f != "/"
+      for f in var.protected_folders : trimspace(f) != "" && f != "/"
     ])
     error_message = "Folder names cannot be empty, whitespace-only, or just '/'."
   }
 
   validation {
     condition = alltrue([
-      for f in var.folders : !startswith(f, "/")
+      for f in var.protected_folders : !startswith(f, "/")
     ])
     error_message = "Folder paths must be relative and cannot start with a leading '/' (use 'raw/' instead of '/raw/')."
   }
 
   validation {
     condition = alltrue([
-      for f in var.folders : !strcontains(f, "//") && !strcontains(f, "\\")
+      for f in var.protected_folders : !strcontains(f, "//") && !strcontains(f, "\\")
     ])
     error_message = "Folder paths cannot contain double slashes ('//') or backslashes ('\\')."
   }
 
   validation {
     condition = alltrue([
-      for f in var.folders : can(regex("^[a-zA-Z0-9._-]+(/[a-zA-Z0-9._-]+)*/?$", f))
+      for f in var.protected_folders : can(regex("^[a-zA-Z0-9._-]+(/[a-zA-Z0-9._-]+)*/?$", f))
     ])
     error_message = "Folder paths may only contain alphanumeric characters, hyphens (-), underscores (_), dots (.), and single forward slashes (/) for nested folders."
   }
