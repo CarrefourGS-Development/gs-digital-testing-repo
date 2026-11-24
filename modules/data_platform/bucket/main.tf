@@ -15,6 +15,7 @@ resource "google_storage_bucket" "data_bucket" {
   name                     = var.bucket_name
   project                  = var.project_id
   location                 = var.location
+  force_destroy            = var.force_destroy
   storage_class            = var.storage_class
   public_access_prevention = "enforced"
 
@@ -26,10 +27,6 @@ resource "google_storage_bucket" "data_bucket" {
 
   soft_delete_policy {
     retention_duration_seconds = var.retention_duration_seconds
-  }
-
-  lifecycle {
-    prevent_destroy = true
   }
 
   labels = {
