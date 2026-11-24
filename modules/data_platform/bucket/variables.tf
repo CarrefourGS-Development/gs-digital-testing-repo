@@ -39,11 +39,6 @@ variable "protected_folders" {
   description = "Set of folder paths to create (e.g., [\"raw/\", \"processed/\", \"archive/\"])"
 
   validation {
-    condition     = length(var.protected_folders) > 0
-    error_message = "At least one folder path must be specified in 'folders'."
-  }
-
-  validation {
     condition = alltrue([
       for f in var.protected_folders : trimspace(f) != "" && f != "/"
     ])
