@@ -32,6 +32,10 @@ resource "google_storage_bucket" "data_bucket" {
   labels = {
     managed_by  = "terraform"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # Create a dummy object ending in "/" to represent a directory
@@ -42,4 +46,22 @@ resource "google_storage_bucket_object" "files_folder" {
   bucket  = var.bucket_name
 
   depends_on = [google_storage_bucket.data_bucket]
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "google_storage_managed_folder" "this" {
+  for_each = toset([
+    for f in var.protected_folders : endswith(f, "/") ? f : "${f}/"
+  ])
+
+  bucket        = var.bucket_name
+  name          = each.value
+  force_destroy = false
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }

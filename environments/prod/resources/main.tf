@@ -63,6 +63,16 @@ module "create_bucket_template" {
   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
 }
 
+# resource "google_storage_bucket_object" "files_folder" {
+#   # count   = local.bucket_exists ? 0 : 1
+#   name    = "files2/" # .temp is necessary to prevent the occasional error
+#   content = " " # Non-empty string required by the provider to satisfy API payload rules
+#   bucket  = "c4-${var.project_id}"
+
+#   depends_on = [module.create_bucket_template]
+# }
+
+
 # Declare the import mapping if the bucket already exists in GCP
 # import {
 #   to = module.create_bucket_template.google_storage_bucket.data_bucket

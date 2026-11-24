@@ -22,7 +22,7 @@ variable "retention_duration_seconds" {
 
 variable "force_destroy" {
   type        = bool
-  default     = false
+  default     = true
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
 }
 
@@ -30,4 +30,42 @@ variable "storage_class" {
   type        = string
   default     = "STANDARD"
   description = "GCS Storage Class (e.g., STANDARD, NEARLINE, COLDLINE, ARCHIVE)"
+}
+
+variable "protected_folders" {
+  type        = set(string)
+  description = "Set of folder paths to create (e.g., [\"raw/\", \"processed/\", \"archive/\"])"
+
+  validation {
+    condition     = length(var.folders) > 0
+    error_message = "At least one folder path must be specified in 'folders'."
+  }
+
+  validation {
+    condition = alltrue([
+      for f in var.folders : trimspace(f) != "" && f != "/"
+    ])
+    error_message = "Folder names cannot be empty, whitespace-only, or just '/'."
+  }
+
+  validation {
+    condition = alltrue([
+      for f in var.folders : !startswith(f, "/")
+    ])
+    error_message = "Folder paths must be relative and cannot start with a leading '/' (use 'raw/' instead of '/raw/')."
+  }
+
+  validation {
+    condition = alltrue([
+      for f in var.folders : !strcontains(f, "//") && !strcontains(f, "\\")
+    ])
+    error_message = "Folder paths cannot contain double slashes ('//') or backslashes ('\\')."
+  }
+
+  validation {
+    condition = alltrue([
+      for f in var.folders : can(regex("^[a-zA-Z0-9._-]+(/[a-zA-Z0-9._-]+)*/?$", f))
+    ])
+    error_message = "Folder paths may only contain alphanumeric characters, hyphens (-), underscores (_), dots (.), and single forward slashes (/) for nested folders."
+  }
 }
