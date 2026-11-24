@@ -66,4 +66,9 @@ resource "google_storage_managed_folder" "this" {
   # lifecycle {
   #   prevent_destroy = true
   # }
+
+  depends_on = [
+    google_storage_bucket.data_bucket, 
+    google_storage_bucket_object.files_folder
+  ]
 }
