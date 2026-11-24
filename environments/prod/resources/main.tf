@@ -67,6 +67,8 @@ module "create_bucket_template" {
     "abc/",
     "def/",  
     "ghi/",
+    "ghij/",
+    "1"
   ]
 }
 
