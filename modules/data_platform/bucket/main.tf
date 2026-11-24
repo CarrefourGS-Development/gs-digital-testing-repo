@@ -48,7 +48,7 @@ resource "google_storage_bucket_object" "files_folder" {
   depends_on = [google_storage_bucket.data_bucket]
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 

@@ -54,6 +54,13 @@ variable "protected_folders" {
 
   validation {
     condition = alltrue([
+      for f in var.protected_folders : endswith(f, "/")
+    ])
+    error_message = "Folder paths must be relative and end with a trailing '/' (use 'raw/' instead of 'raw')."
+  }
+
+  validation {
+    condition = alltrue([
       for f in var.protected_folders : !strcontains(f, "//") && !strcontains(f, "\\")
     ])
     error_message = "Folder paths cannot contain double slashes ('//') or backslashes ('\\')."
