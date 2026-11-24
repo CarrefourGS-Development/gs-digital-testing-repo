@@ -64,8 +64,8 @@ module "create_bucket_template" {
   folder_deletion_policy = "DELETE" # Options: DELETE, PROTECT, ABANDON
   folder_force_destroy = false
 
-  protected_folders = [
-    # "abc/",
+  protected_folders = [ 
+    # "abc/", 
     # "def/",  
     # "ghi/",
     # "ghij/",
