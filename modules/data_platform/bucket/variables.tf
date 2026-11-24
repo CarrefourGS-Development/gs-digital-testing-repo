@@ -22,7 +22,7 @@ variable "retention_duration_seconds" {
 
 variable "force_destroy" {
   type        = bool
-  default     = true
+  default     = false
   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
 }
 
