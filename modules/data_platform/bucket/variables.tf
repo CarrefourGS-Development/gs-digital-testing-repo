@@ -20,11 +20,11 @@ variable "retention_duration_seconds" {
   description = "Duration in seconds to retain objects in the bucket"
 }
 
-variable "force_destroy" {
-  type        = bool
-  default     = false
-  description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
-}
+# variable "force_destroy" {
+#   type        = bool
+#   default     = false
+#   description = "Allows destroying non-empty GCS buckets/BQ datasets during cleanup"
+# }
 
 variable "storage_class" {
   type        = string

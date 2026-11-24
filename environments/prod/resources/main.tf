@@ -63,6 +63,14 @@ module "create_bucket_template" {
   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
 }
 
+resource "terraform_data" "protect_bucket_template" {
+  depends_on = [module.create_bucket_template]
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 # Declare the import mapping if the bucket already exists in GCP
 # import {
 #   to = module.create_bucket_template.google_storage_bucket.data_bucket
