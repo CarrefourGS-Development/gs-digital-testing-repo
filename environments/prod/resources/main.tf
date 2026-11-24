@@ -61,6 +61,12 @@ module "create_bucket_template" {
   location      = var.location
 
   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
+
+  protected_folders = [
+    "abc/",
+    "def/",
+    "ghi/"
+  ]
 }
 
 # resource "google_storage_bucket_object" "files_folder" {
