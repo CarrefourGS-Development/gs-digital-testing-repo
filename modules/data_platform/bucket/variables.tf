@@ -66,3 +66,9 @@ variable "protected_folders" {
     error_message = "Folder paths may only contain alphanumeric characters, hyphens (-), underscores (_), dots (.), and single forward slashes (/) for nested folders."
   }
 }
+
+variable "folder_deletion_policy" {
+  type        = string
+  default     = "PREVENT"
+  description = "Deletion policy for managed folders (e.g., ABANDON, DELETE, PREVENT)"
+}

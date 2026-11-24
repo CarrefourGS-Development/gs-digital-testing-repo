@@ -61,6 +61,8 @@ resource "google_storage_managed_folder" "this" {
   name          = each.value
   force_destroy = false
 
+  deletion_policy = var.folder_deletion_policy
+
   # lifecycle {
   #   prevent_destroy = true
   # }
