@@ -53,23 +53,15 @@ module "testing_sa_key_1_secret_manager" {
 # • Start and End: Must begin and end with a letter or number.
 # • IP Address: Cannot be formatted as an IP address in dotted-decimal notation (e.g., 192.168.5.4).
 # • Immutability: Once created, a bucket name cannot be changed; you must create a new bucket and migrate the data.
-# module "create_bucket_template" {
-#   source = "../../../modules/data_platform/bucket"
+module "create_bucket_template" {
+  source = "../../../modules/data_platform/bucket"
 
-#   project_id    = var.project_id
-#   bucket_name   = "c4-${var.project_id}"
-#   location      = var.location
+  project_id    = var.project_id
+  bucket_name   = "c4-${var.project_id}"
+  location      = var.location
 
-#   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
-# }
-
-# resource "terraform_data" "protect_bucket_template" {
-#   depends_on = [module.create_bucket_template]
-
-#   lifecycle {
-#     prevent_destroy = true
-#   }
-# }
+  storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
+}
 
 # Declare the import mapping if the bucket already exists in GCP
 # import {
