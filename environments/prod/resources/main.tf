@@ -65,10 +65,10 @@ module "create_bucket_template" {
 
   protected_folders = [
     "abc/",
-    "def/",  
-    "ghi/",
-    "ghij/",
-    "1"
+    # "def/",  
+    # "ghi/",
+    # "ghij/",
+    # "1"
   ]
 }
 
