@@ -65,12 +65,12 @@ module "create_bucket_template" {
   folder_force_destroy = false
 
   protected_folders = [ 
-    # "abc/", 
-    # "def/",  
-    # "ghi/",
-    # "ghij/",
-    # "1",
-    # "files/"
+    "abc/", 
+    "def/",  
+    "ghi/",
+    "ghij/",
+    "1",
+    "files/"
   ]
 }
 
