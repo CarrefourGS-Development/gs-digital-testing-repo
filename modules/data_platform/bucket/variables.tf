@@ -34,6 +34,8 @@ variable "storage_class" {
 
 variable "protected_folders" {
   type        = set(string)
+  default     = []
+  nullable    = false
   description = "Set of folder paths to create (e.g., [\"raw/\", \"processed/\", \"archive/\"])"
 
   validation {
