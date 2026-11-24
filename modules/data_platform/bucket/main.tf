@@ -59,7 +59,7 @@ resource "google_storage_managed_folder" "this" {
 
   bucket        = var.bucket_name
   name          = each.value
-  force_destroy = false
+  force_destroy = var.folder_force_destroy
 
   deletion_policy = var.folder_deletion_policy
 

@@ -62,6 +62,7 @@ module "create_bucket_template" {
 
   storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
   folder_deletion_policy = "DELETE" # Options: DELETE, PROTECT, ABANDON
+  folder_force_destroy = false
 
   protected_folders = [
     "abc/",

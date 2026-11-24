@@ -72,3 +72,9 @@ variable "folder_deletion_policy" {
   default     = "PREVENT"
   description = "Deletion policy for managed folders (e.g., ABANDON, DELETE, PREVENT)"
 }
+
+variable "folder_force_destroy" {
+  type        = bool
+  default     = false
+  description = "Allows destroying managed folders during cleanup"
+}
