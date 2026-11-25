@@ -60,7 +60,7 @@ module "create_bucket_template" {
   bucket_name   = "c4-${var.project_id}"
   location      = var.location
 
-  storage_class = "STANDARD" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
+  storage_class = "NEARLINE" # Options: STANDARD, NEARLINE, COLDLINE, ARCHIVE
   folder_deletion_policy = "PREVENT" # Options: DELETE, PREVENT, ABANDON
   folder_force_destroy = false
   force_destroy = false
