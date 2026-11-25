@@ -70,7 +70,8 @@ module "create_bucket_template" {
     # "ghi/",
     "ghij/",
     # "1/",
-    "files/"
+    "files/",
+    "test1/"
   ]
 }
 
