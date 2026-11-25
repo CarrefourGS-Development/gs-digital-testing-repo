@@ -68,7 +68,7 @@ module "create_bucket_template" {
     # "abc/", 
     # "def/",  
     # "ghi/",
-    "ghije/",
+    "ghij/",
     # "1/",
     "files/"
   ]
