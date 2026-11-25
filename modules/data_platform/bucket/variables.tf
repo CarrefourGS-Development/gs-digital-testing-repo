@@ -85,3 +85,9 @@ variable "folder_force_destroy" {
   default     = false
   description = "Allows destroying managed folders during cleanup"
 }
+
+variable "versioning_enabled" {
+  type        = bool
+  default     = true
+  description = "Enable versioning for the GCS bucket"
+}
