@@ -88,6 +88,6 @@ variable "folder_force_destroy" {
 
 variable "versioning_enabled" {
   type        = bool
-  default     = true
+  default     = false
   description = "Enable versioning for the GCS bucket"
 }
