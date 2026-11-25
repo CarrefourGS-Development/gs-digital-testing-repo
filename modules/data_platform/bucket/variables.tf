@@ -91,3 +91,9 @@ variable "versioning_enabled" {
   default     = true
   description = "Enable versioning for the GCS bucket"
 }
+
+variable "days_since_noncurrent_time" {
+  type        = number
+  default     = 7
+  description = "Number of days after which noncurrent versions will be deleted, must be a whole number greater than or equal to 1"
+}

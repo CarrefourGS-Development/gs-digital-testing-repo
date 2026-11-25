@@ -22,7 +22,18 @@ resource "google_storage_bucket" "data_bucket" {
   uniform_bucket_level_access = true
 
   versioning {
-    enabled = var.versioning_enabled
+    enabled = var.versioning_enabled 
+  }
+
+  # Expire noncurrent versions after 7 days (when deleted, they enter Soft Delete if active)
+  lifecycle_rule {
+    action {
+      type = "Delete"
+    }
+    condition {
+      days_since_noncurrent_time = var.days_since_noncurrent_time
+      with_state                 = "ARCHIVED"
+    }
   }
 
   soft_delete_policy {
